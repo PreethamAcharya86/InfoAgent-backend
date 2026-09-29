@@ -7,11 +7,6 @@ import userRoutes from './routes/user.js'
 import session from 'express-session';
 import MongoStore from 'connect-mongo';
 import passport from 'passport';
-import path from "path";
-import { fileURLToPath } from "url";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 const app = express();
 const port = process.env.PORT || 8080;
@@ -47,9 +42,8 @@ app.use(session({
 app.use("/", chatRoutes);
 app.use("/", userRoutes);
 
-app.use(express.static(path.join(__dirname, "../Frontend/dist")));
-app.get("/:any", (req, res) => {
-  res.sendFile(path.join(__dirname, "../Frontend/dist/index.html"));
+app.get("/health", (_req, res) => {
+	res.status(200).json({ status: "ok" });
 });
 
 
